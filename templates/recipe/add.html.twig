@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une recette{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Ajouter une recette</h1>
+
+    {{ form_start(form, { attr: { novalidate: 'novalidate'} }) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.image) }}
+
+        <h3>Ingrédients</h3>
+        <div id="ingredients-collection"
+            data-prototype="{{ form_widget(form.recipeIngredients.vars.prototype)|e('html_attr') }}">
+            {% for child in form.recipeIngredients %}
+                <fieldset class="ingredient-item border p-3 my-2 rounded">
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_row(child.ingredientName) }}
+                        </div>
+                        <div class="col-6">
+                            {{ form_row(child.quantity)}}
+                        </div>
+                        <div class="col-6">
+                            {{ form_row(child.unit) }}
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-lg mt-2 bg-transparent remove-ingredient-btn" title="Supprimer cet ingrédient">
+                        <i class="bi bi-trash text-danger"></i>
+                    </button>
+
+                    <button type="button" 
+                            class="btn btn-sm btn-outline-secondary mt-1 add-ingredient-btn" 
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalAddIngredient">
+                        ➕ Créer un ingrédient
+                    </button>
+                </fieldset>
+            {% endfor %}
+            
+            <datalist id="ingredient-list">
+                {% for ingredient in ingredients %}
+                    <option value="{{ ingredient.name }}"></option>
+                {% endfor %}
+            </datalist>
+            
+            <datalist id="unit-list">
+                {% for unit in units %}
+                    <option value="{{ unit }}"></option>
+                {% endfor %}
+            </datalist>
+            
+        </div>
+
+        <button type="button" id="add-ingredient-to-recipe" class="btn btn-outline-primary mt-3">
+            ➕ Ajouter un ingrédient à la recette
+        </button>
+
+        <button class="btn btn-primary mt-3">Valider</button>
+    {{ form_end(form) }}
+</div>
+
+<div class="modal fade" id="modalAddIngredient" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalLabel">Créer un ingrédient</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+            <div id="ingredient-modal-content">
+                <!-- Le formulaire AJAX sera injecté ici -->
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+{% endblock %}

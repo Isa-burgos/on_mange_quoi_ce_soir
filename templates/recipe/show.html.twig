@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ recipe.name }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-4" style="background-color: #dfeeff; min-height: 90vh;">
+    <div class="container">
+
+        <a href="{{ path('app_recipe') }}" class="text-decoration-none mb-3 d-inline-block">
+            ← Recette
+        </a>
+
+        <div class="row align-items-start">
+            <!-- Partie gauche : image -->
+            <div class="col-lg-6 mb-4">
+                {% if recipe.image %}
+                    <img src="{{ asset('uploads/' ~ recipe.image) }}" alt="{{ recipe.name }}" class="img-fluid rounded w-100" style="object-fit: cover; max-height: 400px;">
+                {% else %}
+                    <img src="{{ asset('img/default-recipe.png') }}" alt="Image par défaut" class="img-fluid rounded w-100" style="object-fit: cover; max-height: 400px;">
+                {% endif %}
+            </div>
+
+            <!-- Partie droite : titre et ingrédients -->
+            <div class="col-lg-6 d-flex flex-column align-items-start">
+
+                <h1 class="fs-3 mb-3">{{ recipe.name }}</h1>
+
+                <div class="border rounded p-3 w-100" style="background-color: white;">
+                    <h5 class="fw-bold">Ingrédients</h5>
+                    <ul class="list-unstyled mt-3">
+                        {% for ri in recipe.recipeIngredients %}
+                            <li class="d-flex align-items-center mb-2">
+                                <span class="me-2">📌</span> 
+                                <span>{{ ri.quantity }} {{ ri.unit }} {{ ri.ingredient.name }}</span>
+                            </li>
+                        {% else %}
+                            <li>Aucun ingrédient renseigné.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Partie Préparation en dessous -->
+        <div class="row mt-5">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="border rounded p-4" style="background-color: white;">
+                    <h5 class="fw-bold mb-3">Préparation</h5>
+                    {% if recipe.description %}
+                        {% set steps = recipe.description|split('\n') %}
+                        <ol>
+                            {% for step in steps %}
+                                {% if step|trim %}
+                                    <li class="mb-2">{{ step }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ol>
+                    {% else %}
+                        <p class="text-muted">Pas encore de description pour cette recette.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+

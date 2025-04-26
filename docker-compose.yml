@@ -1,0 +1,29 @@
+services:
+  symfony:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - DB_HOST=mysql-burgos.alwaysdata.net
+      - DB_DATABASE=burgos_omqcs
+      - DB_USER=burgos
+      - DB_PASSWORD=Is@bel1410
+      - APP_ENV=dev
+      - DATABASE_URL="mysql://burgos:Is%40bel1410@mysql-burgos.alwaysdata.net:3306/burgos_omqcs"
+      - MONGODB_URL=mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
