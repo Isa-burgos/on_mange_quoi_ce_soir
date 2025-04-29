@@ -20,7 +20,7 @@ final class MenuController extends AbstractController
     {
         $menus = $menuRepo->findAll();
 
-        return $this->render('accueil/index.html.twig', [
+        return $this->render('menu/index.html.twig', [
             'menus' => $menus,
         ]);
     }

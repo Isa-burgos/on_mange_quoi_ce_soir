@@ -1,20 +1,78 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RepasController!{% endblock %}
+{% block title %}Menus de la semaine{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Les menus de la semaine</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/html/src/Controller/RepasController.php</code></li>
-        <li>Your template at <code>/var/www/html/templates/repas/index.html.twig</code></li>
-    </ul>
+    {# Bandeau des créneaux (P'tit déj, Déjeûner, etc.) #}
+    <div class="d-none d-md-flex bg-primary text-white p-2 rounded mb-2">
+        <div class="col-md-2"></div> {# espace pour les jours #}
+        {% set creneaux = ["P'tit déj", "Déjeûner", "Goûter", "Dîner"] %}
+        {% for creneau in creneaux %}
+            <div class="col text-center fw-bold">
+                {{ creneau }}
+            </div>
+        {% endfor %}
+    </div>
+
+    {# Définition des jours de la semaine #}
+    {% set jours = {
+        1: "Lundi",
+        2: "Mardi",
+        3: "Mercredi",
+        4: "Jeudi",
+        5: "Vendredi",
+        6: "Samedi",
+        7: "Dimanche"
+    } %}
+
+    {# Correspondance Enum -> Texte affiché #}
+    {% set correspondanceCreneaux = {
+        'petit_dejeuner': "P'tit déj",
+        'dejeuner': "Déjeûner",
+        'gouter': "Goûter",
+        'diner': "Dîner"
+    } %}
+
+    {# Boucle sur chaque jour #}
+    {% for dayNumber, jour in jours %}
+        <div class="row align-items-center mb-3">
+            {# Colonne pour le jour #}
+            <div class="col-md-3 col-lg-2 d-flex justify-content-center mb-2 mb-md-0">
+                <div class="btn-day w-100">
+                    {{ jour }}
+                </div>
+            </div>
+
+            {# Boucle sur chaque créneau #}
+            {% for creneau in creneaux %}
+                <div class="col d-flex justify-content-center mb-2 mb-md-0">
+                    {% set repas_du_creneau = menus|filter(m =>
+                        m.mealDate|date('N') == dayNumber and
+                        correspondanceCreneaux[m.mealTime.value] == creneau
+                    ) %}
+
+                    {% if repas_du_creneau is not empty %}
+                        <ul class="list-unstyled text-center mb-0">
+                            {% for menu in repas_du_creneau %}
+                                {% for recipe in menu.recipes %}
+                                    <li>{{ recipe.name }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {# Bouton Ajouter un repas si vide #}
+                    <a href="{{ path('app_ajouter_repas', { jour: jour, creneau: creneau }) }}" class="btn btn-outline-primary ms-2">Ajouter un repas
+                        <i class="bi bi-plus-circle"></i>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
 </div>
+
 {% endblock %}

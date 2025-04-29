@@ -6,8 +6,8 @@
     <div class="container mt-4">
         <h1>Liste des recettes</h1>
 
-        <a href="{{ path('app_add_recipe') }}" class="btn btn-success mb-3">
-            ➕ Ajouter une nouvelle recette
+        <a href="{{ path('app_add_recipe') }}" class="btn btn-primary mb-3">
+            Ajouter une nouvelle recette
         </a>
 
         {% if recipes is not empty %}
@@ -28,8 +28,8 @@
                             {{ recipe.name }}
                         </div>
                         <div class="card-footer">
-                            <a href="{{ path('app_show_recipe', {id: recipe.id}) }}" class="btn btn-lg" title="Voir la recette"><i class="bi bi-eye-fill text-primary"></i></a>
-                            <a href="{{ path('app_edit_recipe', {id: recipe.id}) }}" class="btn btn-lg" title="Modifier la recette"><i class="bi bi-pencil-fill text-primary"></i></a>
+                            <a href="{{ path('app_show_recipe', {id: recipe.id}) }}" class="btn btn-lg" title="Voir la recette"><i class="bi bi-eye-fill text-dark"></i></a>
+                            <a href="{{ path('app_edit_recipe', {id: recipe.id}) }}" class="btn btn-lg" title="Modifier la recette"><i class="bi bi-pencil-fill text-dark"></i></a>
                             <a href="{{ path('app_delete_recipe', {id: recipe.id}) }}" class="btn btn-lg" title="Supprimer la recette"
                             onclick="return confirm('Es-tu sûr de vouloir supprimer cette recette ?');">
                             <i class="bi bi-trash text-danger"></i>

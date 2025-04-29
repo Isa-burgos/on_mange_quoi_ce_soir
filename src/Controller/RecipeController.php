@@ -28,7 +28,13 @@ final class RecipeController extends AbstractController
     }
 
     #[Route('/recette/ajouter', name: 'app_add_recipe')]
-    public function add(Request $request, EntityManagerInterface $em, UserRepository $userRepository, IngredientRepository $ingredientRepository, RecipeIngredientRepository $recipeIngredientRepository): Response
+    public function add(
+        Request $request,
+        EntityManagerInterface $em,
+        UserRepository $userRepository,
+        IngredientRepository $ingredientRepository,
+        RecipeIngredientRepository $recipeIngredientRepository
+        ): Response
     {
         $recipe = new Recipe();
         $recipe->setUser($userRepository->find(1));
@@ -97,7 +103,7 @@ final class RecipeController extends AbstractController
         ]);
     }
 
-    #[Route('/recette/{id}/modifier', name: 'app_edit_recipe')]
+#[Route('/recette/{id}/modifier', name: 'app_edit_recipe')]
 public function edit(
     Request $request,
     Recipe $recipe,

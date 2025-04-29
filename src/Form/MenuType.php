@@ -29,7 +29,7 @@ class MenuType extends AbstractType
                     MealTime::DINER => 'diner',
         },
             ])
-            ->add('recipe_id', EntityType::class, [
+            ->add('recipes', EntityType::class, [
                 'class' => Recipe::class,
                 'choice_label' => 'name',
                 'multiple' => true,

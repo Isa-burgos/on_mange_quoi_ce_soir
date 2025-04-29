@@ -1,0 +1,21 @@
+/* Menu */
+.btn-day{
+    border: solid 1px var(--bs-dark);
+    border-radius: 15px;
+    color: var(--bs-dark);
+    font-family: 'Caveat', cursive;
+    font-size: 32px;
+    background-color: var(--bs-primary);
+    padding: 0.5rem;
+    text-align: center;
+}
+
+
+/* Footer */
+footer{
+    background-color: var(--bs-dark);
+}
+
+.copyright, .footer-link{
+    color: #FFF;
+}

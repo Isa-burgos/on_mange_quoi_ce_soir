@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const createButton = document.createElement('button');
         createButton.type = 'button';
         createButton.className = 'btn btn-sm btn-outline-secondary mt-2 add-ingredient-btn';
-        createButton.textContent = '➕ Créer un ingrédient';
+        createButton.textContent = 'Créer un ingrédient';
         createButton.setAttribute('data-bs-toggle', 'modal');
         createButton.setAttribute('data-bs-target', '#modalAddIngredient');
 
